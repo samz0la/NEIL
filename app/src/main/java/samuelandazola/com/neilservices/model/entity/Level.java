@@ -28,11 +28,27 @@ public class Level {
   @ColumnInfo(name = "time_stamp")
   private Date date;
 
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public long getGameId() {
+    return gameId;
+  }
+
+  public void setGameId(long gameId) {
+    this.gameId = gameId;
+  }
+
   public long getScore() {
     return score;
   }
 
-  public void setScore(int score) {
+  public void setScore(long score) {
     this.score = score;
   }
 
@@ -40,7 +56,7 @@ public class Level {
     return results;
   }
 
-  public void setResults(int results) {
+  public void setResults(long results) {
     this.results = results;
   }
 
@@ -50,21 +66,5 @@ public class Level {
 
   public void setDate(Date date) {
     this.date = date;
-  }
-
-  public long getGameId() {
-    return gameId;
-  }
-
-  public void setGameId(int gameId) {
-    this.gameId = gameId;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
   }
 }

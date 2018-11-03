@@ -41,8 +41,7 @@ public class MainThread extends Thread {
       }
       finally {
         if(canvas != null) {
-          try {
-            surfaceHolder.unlockCanvasAndPost(canvas);
+          try {surfaceHolder.unlockCanvasAndPost(canvas);
           }
           catch (Exception e) {e.printStackTrace();}
         }
@@ -52,8 +51,7 @@ public class MainThread extends Thread {
 
       try {
         this.sleep(waitTime);
-      } catch (Exception e) {
-      }
+      } catch (Exception e) {}
       totalTime += System.nanoTime() - startTime;
       frameCount++;
       if (frameCount == FPS) {
@@ -66,7 +64,7 @@ public class MainThread extends Thread {
   }
 
   public void setRunning(boolean b) {
-
+    running = b;
   }
 
 }

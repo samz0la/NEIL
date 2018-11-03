@@ -10,20 +10,21 @@ public class Background {
 
   public Background(Bitmap res) {
     image = res;
+    dx = GamePanel.MOVESPEED;
   }
-  public void update(){
-    x+=dx;
-    if(x<-GamePanel.WIDTH){
-      x=0;
+
+  public void update() {
+    x += dx;
+    if (x <-GamePanel.WIDTH) {
+      x = 0;
     }
   }
-  public void draw(Canvas canvas){
+
+  public void draw(Canvas canvas) {
     canvas.drawBitmap(image, x, y, null);
-    if(x<0){
-      canvas.drawBitmap(image, x+ GamePanel.WIDTH, y, null);
+    if (x < 0) {
+      canvas.drawBitmap(image, x + GamePanel.WIDTH, y, null);
     }
-  }
-  public void setVector(int dx){
-    this.dx = dx;
   }
 }
+

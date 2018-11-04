@@ -25,12 +25,12 @@ public class MainThread extends Thread {
     long waitTime;
     long totalTime = 0;
     int frameCount = 0;
-    long targetTime = 1000 / FPS;
+    long targetTime = 1000 / FPS; //how many millis you want the game loop to run
 
     while (running) {
       startTime = System.nanoTime();
       canvas = null;
-
+//try locking the canvas for pixel editing
       try {
         canvas = this.surfaceHolder.lockCanvas();
         synchronized (surfaceHolder) {

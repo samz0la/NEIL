@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 public class Player extends GameObject{
   private Bitmap spritesheet;
   private int score;
-  private double dya;
   private boolean up;
   private boolean playing;
   private Animation animation = new Animation();
@@ -31,7 +30,7 @@ public class Player extends GameObject{
     animation.setDelay(10);
     startTime = System.nanoTime();
   }
-
+//called by the mption event, when you press down the character will go up
   public void setUp(boolean b){up=b;}
 
   public void update(){
@@ -43,16 +42,15 @@ public class Player extends GameObject{
     animation.update();
 
     if(up){
-      dy = (int) (dya-=1.1);
+      dy -=1.1;
     }else{
-      dy = (int) (dya+=1.1);
+      dy +=1.1;
     }
 
     if(dy>14) dy=14;
     if(dy<-14)dy= -14;
 
     y += dy*2;
-    dy = 0;
   }
 
   public void draw(Canvas canvas){
@@ -61,6 +59,6 @@ public class Player extends GameObject{
   public int getScore(){return score;}
   public boolean getPlaying(){return playing;}
   public void setPlaying(boolean b){playing = b;}
-  public void  resetDYA(){dya = 0;}
+  public void  resetDYA(){dy = 0;}
   public void resetScore(){score = 0;}
 }

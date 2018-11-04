@@ -38,4 +38,28 @@ public abstract class GameObject {
   public Rect getRectangle(){
     return new Rect(x, y, x+width, y+height);
   }
+
+  public int getDy() {
+    return dy;
+  }
+
+  public void setDy(int dy) {
+    this.dy = dy;
+  }
+
+  public int getDx() {
+    return dx;
+  }
+
+  public void setDx(int dx) {
+    this.dx = dx;
+  }
+
+  public void setWidth(int width) {
+    this.width = width;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
+  }
 }

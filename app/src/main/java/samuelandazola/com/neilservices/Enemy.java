@@ -2,7 +2,6 @@ package samuelandazola.com.neilservices;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.media.MediaMetadataRetriever.BitmapParams;
 import java.util.Random;
 
 public class Enemy extends GameObject {
@@ -25,7 +24,7 @@ public class Enemy extends GameObject {
     speed = 7 + (int) (random.nextDouble()*score/30);
 
     //cap the enemy speed
-    if(speed>40)speed = 40;
+    if(speed>60)speed = 60;
 
     Bitmap[] image = new Bitmap[numFrames];
 

@@ -1,5 +1,7 @@
 package samuelandazola.com.neilservices;
 
+import static samuelandazola.com.neilservices.MainThread.canvas;
+
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -24,6 +26,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private ArrayList<Smokepuff> smoke;
   private ArrayList<Enemy> enemy;
   private Random random = new Random();
+  private boolean newGameCreated;
 
 //automatically called when the object is called
   public GamePanel(Context context) {
@@ -67,7 +70,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     smokeStartTimer = System.nanoTime();
     enemyStartTime = System.nanoTime();
 
-    //we can safely start the game loop
+    //we can start the game loop
     thread.setRunning(true);
     thread.start();
   }
@@ -94,6 +97,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     if (player.getPlaying()) {
       bg.update();
       player.update();
+
+      //check top/bottom collision
+      if (player.y < 0 || player.y > getHeight()){
+        player.setPlaying(false);
+        newGame();
+      }
 
       //add enemy on timer
       long enemyElapsed = (System.nanoTime()-enemyStartTime)/1000000;
@@ -151,6 +160,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
           smoke.remove(i);
         }
       }
+    }else{
+      newGameCreated = false;
+      if (!newGameCreated){
+        newGame();
+      }
     }
   }
   public boolean collision(GameObject a, GameObject b){
@@ -188,4 +202,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
       canvas.restoreToCount(savedState);
     }
   }
+  public void newGame(){
+    enemy.clear();
+    smoke.clear();
+
+    player.resetScore();
+    player.setY(HEIGHT/2);
+
+    newGameCreated = true;
+  }
+
 }

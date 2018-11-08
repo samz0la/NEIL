@@ -27,8 +27,15 @@ public abstract class GameObject {
     return y;
   }
 
+  public void setHeight(int height) {
+    this.height = height;
+  }
   public int getHeight() {
     return height;
+  }
+
+  public void setWidth(int width) {
+    this.width = width;
   }
 
   public int getWidth() {
@@ -55,11 +62,7 @@ public abstract class GameObject {
     this.dx = dx;
   }
 
-  public void setWidth(int width) {
-    this.width = width;
-  }
 
-  public void setHeight(int height) {
-    this.height = height;
-  }
+
+
 }

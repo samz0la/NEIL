@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 public class Background {
 
   private Bitmap image;
-  private int x, y, dx;
+  public int x, y, dx;
 
   public Background(Bitmap res) {
     image = res;

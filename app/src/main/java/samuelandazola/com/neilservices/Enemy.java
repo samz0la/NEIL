@@ -24,7 +24,7 @@ public class Enemy extends GameObject {
     speed = 7 + (int) (random.nextDouble()*score/30);
 
     //cap the enemy speed
-    if(speed>60)speed = 60;
+    if(speed>70)speed = 70;
 
     Bitmap[] image = new Bitmap[numFrames];
 
@@ -50,6 +50,7 @@ public class Enemy extends GameObject {
   }
   @Override
   public int getWidth(){
+
     //offset slightly for more realistic collision detection
     return width-10;
   }

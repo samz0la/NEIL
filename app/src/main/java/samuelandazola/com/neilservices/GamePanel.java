@@ -3,9 +3,13 @@ package samuelandazola.com.neilservices;
 import static samuelandazola.com.neilservices.MainThread.canvas;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -28,6 +32,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private Random random = new Random();
   private boolean newGameCreated;
 
+
+
+  private Explosion explosion;
+  private long startReset;
+  private boolean reset;
+  private boolean disappear;
+  private boolean started;
+  private int best;
+
+
+
 //automatically called when the object is called
   public GamePanel(Context context) {
     super(context);
@@ -35,7 +50,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 //add the callback to the surfaceholder to intercept events
     getHolder().addCallback(this);
 
-    thread = new MainThread(getHolder(), this);
 //make gamepanel focusable so it can handle events
     setFocusable(true);
   }
@@ -55,6 +69,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
       try{thread.setRunning(false);
         thread.join();
         retry = false;
+        thread = null;
 
       }catch(InterruptedException e) {e.printStackTrace();}
 
@@ -70,6 +85,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     smokeStartTimer = System.nanoTime();
     enemyStartTime = System.nanoTime();
 
+    thread = new MainThread(getHolder(), this);
+
     //we can start the game loop
     thread.setRunning(true);
     thread.start();
@@ -79,9 +96,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   public boolean onTouchEvent(MotionEvent event) {
 
     if(event.getAction() == MotionEvent.ACTION_DOWN){
-      if (!player.getPlaying()){
+      if (!player.getPlaying() && newGameCreated && reset){
         player.setPlaying(true);
-      }else{
+        player.setUp(true);
+      }
+      if (player.getPlaying()){
+
+        if (!started)started = true;
+        reset = false;
         player.setUp(true);
       }
       return true;
@@ -94,19 +116,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   }
 
   public void update() {
+
     if (player.getPlaying()) {
+
       bg.update();
       player.update();
 
       //check top/bottom collision
-      if (player.y < 0 || player.y > getHeight()){
+      if (player.y < 0 || player.y > HEIGHT){
         player.setPlaying(false);
-        newGame();
       }
 
       //add enemy on timer
       long enemyElapsed = (System.nanoTime()-enemyStartTime)/1000000;
-      if (enemyElapsed > (6000 - player.getScore()/4)){
+      if (enemyElapsed > (4000 - player.getScore()/4)){
 
         //first enemy always goes down the middle
         if (enemy.size()==0){
@@ -137,6 +160,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (collision(enemy.get(i),player)){
           enemy.remove(i);
           player.setPlaying(false);
+
           break;
         }
         //removes enemy if it is way off the screen
@@ -148,6 +172,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
       //time elapsed from now and when smokeStartTime started
       long elapsed = (System.nanoTime() - smokeStartTimer)/1000000;
+
       if(elapsed > 120){
         smoke.add(new Smokepuff(player.getX()+50, player.getY()+150));
         smokeStartTimer = System.nanoTime();
@@ -161,12 +186,26 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
       }
     }else{
-      newGameCreated = false;
-      if (!newGameCreated){
+      player.resetDY();
+      if (!reset){
+        newGameCreated = false;
+        startReset = System.nanoTime();
+        reset = true;
+        disappear = true;
+        explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getX(),
+        player.getY()-30, 100,100,25);
+      }
+
+      explosion.update();
+      long resetElapsed = (System.nanoTime() -startReset)/1000000;
+
+      if (resetElapsed > 2500 && !newGameCreated){ //how long for player to reset
         newGame();
       }
+
     }
   }
+
   public boolean collision(GameObject a, GameObject b){
     if (Rect.intersects(a.getRectangle(), b.getRectangle())){
       return true;
@@ -176,7 +215,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   @Override
   public void draw(Canvas canvas) {
-    //TODO fix screen scroll
     //super.draw(canvas);
 
     //scales to entire phone screen
@@ -188,8 +226,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
       final int savedState = canvas.save();
       canvas.scale(scaleFactorX, scaleFactorY);
       bg.draw(canvas);
-      player.draw(canvas);
 
+      if (!disappear) {
+        player.draw(canvas);
+      }
       //draws smoke
       for(Smokepuff sp: smoke){ //sp equals every value in the smoke array and when it itterates through each one it will draw the smoke
         sp.draw(canvas);
@@ -199,17 +239,57 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         e.draw(canvas);
       }
 
+      //draw explosion
+      if (started){
+        explosion.draw(canvas);
+      }
+
+      drawText(canvas);
+
       canvas.restoreToCount(savedState);
     }
+
   }
+
   public void newGame(){
+
+    disappear = false;
+
     enemy.clear();
     smoke.clear();
 
+    player.resetDY();
     player.resetScore();
     player.setY(HEIGHT/2);
 
+    if(player.getScore()>best){
+      best = player.getScore();
+    }
+
     newGameCreated = true;
+  }
+
+  public void drawText(Canvas canvas){
+    //shows current and best distance
+    Paint paint = new Paint();
+    paint.setColor(Color.WHITE);
+    paint.setTextSize(70);
+    paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+    canvas.drawText("DISTANCE: " + (player.getScore()*3), 10, HEIGHT - 10, paint);
+    canvas.drawText("BEST: " + best, WIDTH - 400, HEIGHT - 10, paint);
+
+    if (!player.getPlaying() && newGameCreated && reset){
+      Paint paint1 = new Paint();
+      paint1.setColor(Color.WHITE);
+      paint1.setTextSize(100);
+      paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+      canvas.drawText("PRESS TO START", WIDTH/2 - 400, HEIGHT/2, paint1);
+
+      paint1.setTextSize(80);
+      canvas.drawText("PRESS AND HOLD TO GO UP", WIDTH/2-400, HEIGHT/2 + 100, paint1);
+      canvas.drawText("RELEASE TO GO DOWN", WIDTH/2-400, HEIGHT/2 + 180, paint1);
+
+    }
   }
 
 }

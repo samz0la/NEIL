@@ -19,6 +19,7 @@ public class Animation {
 
   public void update(){
     long elapsed = (System.nanoTime()-startTime)/1000000;
+
     if (elapsed>delay){
       currentFrame++;
       startTime = System.nanoTime();

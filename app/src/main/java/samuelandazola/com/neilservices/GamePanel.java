@@ -31,9 +31,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private ArrayList<Enemy> enemy;
   private Random random = new Random();
   private boolean newGameCreated;
-
-
-
   private Explosion explosion;
   private long startReset;
   private boolean reset;
@@ -123,7 +120,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
       player.update();
 
       //check top/bottom collision
-      if (player.y < 0 || player.y > HEIGHT){
+      if (player.y < 0 || player.y > HEIGHT - 100){
         player.setPlaying(false);
       }
 
@@ -192,8 +189,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         startReset = System.nanoTime();
         reset = true;
         disappear = true;
-        explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getX(),
-        player.getY()-30, 100,100,25);
+        explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getX()+20,
+        player.getY(), 100,100,25);
       }
 
       explosion.update();
@@ -259,12 +256,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     smoke.clear();
 
     player.resetDY();
-    player.resetScore();
     player.setY(HEIGHT/2);
 
     if(player.getScore()>best){
-      best = player.getScore();
+      best = player.getScore()* 3;
     }
+    player.resetScore();
 
     newGameCreated = true;
   }
@@ -276,7 +273,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     paint.setTextSize(70);
     paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
     canvas.drawText("DISTANCE: " + (player.getScore()*3), 10, HEIGHT - 10, paint);
-    canvas.drawText("BEST: " + best, WIDTH - 400, HEIGHT - 10, paint);
+    canvas.drawText("BEST: " + best, WIDTH - 450, HEIGHT - 10, paint);
 
     if (!player.getPlaying() && newGameCreated && reset){
       Paint paint1 = new Paint();

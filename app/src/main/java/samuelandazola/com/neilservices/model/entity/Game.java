@@ -17,8 +17,6 @@ public class Game {
 
   @ColumnInfo(name = "player_id", index = true)
   private long playerId;
-  @ColumnInfo(name = "time_stamp")
-  private Date date;
 
 
   public long getId() {
@@ -37,12 +35,5 @@ public class Game {
   public void setPlayerId(long playerId) {
     this.playerId = playerId;
   }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
 }
+

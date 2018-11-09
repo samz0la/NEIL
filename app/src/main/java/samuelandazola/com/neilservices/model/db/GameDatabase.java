@@ -8,14 +8,12 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import java.util.Date;
 import samuelandazola.com.neilservices.model.dao.GameDao;
-import samuelandazola.com.neilservices.model.dao.LevelDao;
 import samuelandazola.com.neilservices.model.dao.PlayerDao;
 import samuelandazola.com.neilservices.model.db.GameDatabase.Converters;
 import samuelandazola.com.neilservices.model.entity.Game;
-import samuelandazola.com.neilservices.model.entity.Level;
 import samuelandazola.com.neilservices.model.entity.Player;
 
-@Database(entities = {Game.class, Level.class, Player.class},
+@Database(entities = {Game.class, Player.class},
     version = 1,
     exportSchema = true
 )
@@ -29,7 +27,6 @@ public abstract class GameDatabase extends RoomDatabase {
 
   public abstract GameDao getGameDao();
 
-  public abstract LevelDao getLevelDao();
 
   public abstract PlayerDao getPlayerDao();
 

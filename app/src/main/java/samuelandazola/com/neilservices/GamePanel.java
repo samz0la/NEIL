@@ -193,6 +193,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.getY(), 100,100,25);
       }
 
+
       explosion.update();
       long resetElapsed = (System.nanoTime() -startReset)/1000000;
 
@@ -212,7 +213,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   @Override
   public void draw(Canvas canvas) {
-    //super.draw(canvas);
+    //super.draw(canvas); splits the scrolling image
 
     //scales to entire phone screen
     final float scaleFactorX = getWidth() / (WIDTH * 1.f);
@@ -255,12 +256,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     enemy.clear();
     smoke.clear();
 
-    player.resetDY();
-    player.setY(HEIGHT/2);
-
     if(player.getScore()>best){
       best = player.getScore()* 3;
     }
+
+    player.resetDY();
+    player.setY(HEIGHT/2);
+
     player.resetScore();
 
     newGameCreated = true;

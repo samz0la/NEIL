@@ -9,21 +9,21 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 import samuelandazola.com.neilservices.model.entity.Game;
 
-//@Dao
+@Dao
 public interface GameDao {
 
-//  @Insert(onConflict = OnConflictStrategy.FAIL)
-//  long insert(Game game);
-//
-//  @Query("SELECT * FROM Game WHERE player_id = :playerId")
-//  List<Game> select(long playerId);
-//
-//  @Delete
-//  int delete(Game game);
-//
-//  @Delete
-//  int delete(List<Game> games);
-//
-//  @Update
-//  int update(Game game);
+  @Insert(onConflict = OnConflictStrategy.FAIL)
+  long insert(Game game);
+
+  @Query("SELECT * FROM Game WHERE player_id = :playerId")
+  List<Game> select(long playerId);
+
+  @Delete
+  int delete(Game game);
+
+  @Delete
+  int delete(List<Game> games);
+
+  @Update
+  int update(Game game);
 }

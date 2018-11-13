@@ -9,12 +9,12 @@ public class Player extends GameObject{
   private boolean up;
   private boolean playing;
   private Animation animation = new Animation();
-  private long startTime;
+  private long startTime; //initiates the score
 
   public Player(Bitmap res, int w, int h, int numFrames){
     x = 100;
     y = GamePanel.HEIGHT/2;
-    dy = 0;
+    dy = 0; //exceleration on the y axis
     score = 0;
     height = h;
     width = w;
@@ -35,19 +35,19 @@ public class Player extends GameObject{
 
   public void update(){
     long elapsed = (System.nanoTime()-startTime)/1000000;
-    if(elapsed>100){
+    if(elapsed>100){ //every 1/10 of a second the score increase by one
       score++;
       startTime = System.nanoTime();
     }
     animation.update();
 
-    if(up){
+    if(up){ //acceleration of the player along the y axis
       dy -=1.1;
     }else{
       dy +=1.1;
     }
 
-    if(dy>14) dy=14;
+    if(dy>14) dy=14; //caps the speed of player
     if(dy<-14)dy= -14;
 
     y += dy*2;

@@ -3,6 +3,7 @@ package samuelandazola.com.neilservices;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+//This is the main game loop
 public class MainThread extends Thread {
 
   private int FPS = 30;
@@ -18,7 +19,7 @@ public class MainThread extends Thread {
     this.gamePanel = gamePanel;
   }
 
-  @Override
+  @Override //everytime you run through the game loop we want it to run 1000milliseconds/FPS
   public void run() {
     long startTime;
     long timeMillis;
@@ -30,12 +31,12 @@ public class MainThread extends Thread {
     while (running) {
       startTime = System.nanoTime();
       canvas = null;
-//try locking the canvas for pixel editing
+//locking the canvas for pixel editing
       try {
         canvas = this.surfaceHolder.lockCanvas();
         synchronized (surfaceHolder) {
-          this.gamePanel.update();
-          this.gamePanel.draw(canvas);
+          this.gamePanel.update(); //updates the game once
+          this.gamePanel.draw(canvas); //draws the game once
         }
       } catch (Exception e) {
       }
@@ -46,7 +47,10 @@ public class MainThread extends Thread {
           catch (Exception e) {e.printStackTrace();}
         }
       }
+
+      //creating the time in milliseconds
       timeMillis = (System.nanoTime() - startTime) / 1000000;
+      //how long we wait to go through the loop again
       waitTime = targetTime - timeMillis;
 
       try {

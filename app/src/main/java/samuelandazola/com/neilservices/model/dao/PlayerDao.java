@@ -7,29 +7,32 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import java.util.List;
-import samuelandazola.com.neilservices.model.entity.Player;
+import samuelandazola.com.neilservices.model.entity.PlayerEntity;
 
 @Dao
 public interface PlayerDao {
 
   @Insert(onConflict = OnConflictStrategy.FAIL)
-  List<Long> insert(List<Player> players);
+  List<Long> insert(List<PlayerEntity> players);
 
   @Insert(onConflict = OnConflictStrategy.FAIL)
-  long insert(Player player);
+  long insert(PlayerEntity player);
 
-  @Query("SELECT * FROM Player WHERE player_id = :playerId")
-  List<Player> select(long playerId);
+  @Query("SELECT * FROM PlayerEntity WHERE player_id = :playerId")
+  List<PlayerEntity> select(long playerId);
 
-  @Query("SELECT * FROM Player ORDER BY high_score DESC")
-  List<Player> select();
+  @Query("SELECT * FROM PlayerEntity ORDER BY high_score DESC")
+  List<PlayerEntity> select();
+
+  @Query("SELECT * FROM PlayerEntity WHERE email = :email")
+  List<PlayerEntity> select(String email);
 
   @Delete
-  int delete (List<Player> players);
+  int delete (List<PlayerEntity> players);
 
   @Delete
-  int delete (Player player);
+  int delete (PlayerEntity player);
 
   @Update
-  int update (Player player);
+  int update (PlayerEntity player);
 }

@@ -10,11 +10,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
+import samuelandazola.com.neilservices.model.db.GameDatabase;
+import samuelandazola.com.neilservices.model.entity.GameEntity;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -37,12 +40,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private boolean disappear;
   private boolean started;
   private int best;
+  private long playerId;
 
 
+  //automatically called when the object is called
+  public GamePanel(Context context, long playerId) {
 
-//automatically called when the object is called
-  public GamePanel(Context context) {
     super(context);
+    this.playerId = playerId;
 
 //add the callback to the surfaceholder to intercept events
     getHolder().addCallback(this);
@@ -63,7 +68,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     while(retry && counter<1000)
     {
       counter++;
-      try{thread.setRunning(false);
+      try{thread.setRunning(false); //tries to stop the thread, then goes to the catch. if it doesn't catch it will run thread again
         thread.join();
         retry = false;
         thread = null;
@@ -75,8 +80,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   @Override
   public void surfaceCreated(SurfaceHolder holder) {
+    //passing the image into the constructor
     bg = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.background2));
-    player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.neil_character2), 171, 151, 1);
+    player = new Player(BitmapFactory.decodeResource(getResources(),
+        R.drawable.neil_character2), 171, 151, 1);
     enemy = new ArrayList<>();
     smoke = new ArrayList<>();
     smokeStartTimer = System.nanoTime();
@@ -84,22 +91,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     thread = new MainThread(getHolder(), this);
 
-    //we can start the game loop
+    //starts the game loop
     thread.setRunning(true);
     thread.start();
   }
 
   @Override
   public boolean onTouchEvent(MotionEvent event) {
-
+//listens to touch events on the screen/surfaceview
     if(event.getAction() == MotionEvent.ACTION_DOWN){
-      if (!player.getPlaying() && newGameCreated && reset){
+      if (!player.getPlaying() && newGameCreated && reset){ //if its the first time pressing down then the game starts.
         player.setPlaying(true);
         player.setUp(true);
       }
       if (player.getPlaying()){
 
-        if (!started)started = true;
+        if (!started)started = true; //if its not the first time pressing the game doesn't reset
         reset = false;
         player.setUp(true);
       }
@@ -113,7 +120,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   }
 
   public void update() {
-
+    //updates player and background only with the player is playing
     if (player.getPlaying()) {
 
       bg.update();
@@ -189,7 +196,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         startReset = System.nanoTime();
         reset = true;
         disappear = true;
-        explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getX()+20,
+        explosion = new Explosion(BitmapFactory.decodeResource(getResources(),
+            R.drawable.explosion), player.getX()+20,
         player.getY(), 100,100,25);
       }
 
@@ -213,7 +221,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   @Override
   public void draw(Canvas canvas) {
-    //super.draw(canvas); splits the scrolling image
+    //super.draw(canvas); (if i call the super it splits the scrolling thread)
 
     //scales to entire phone screen
     final float scaleFactorX = getWidth() / (WIDTH * 1.f);
@@ -266,6 +274,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     player.resetScore();
 
     newGameCreated = true;
+
+    new AddTask().execute(player.getScore());
+  }
+
+  private class AddTask extends AsyncTask<Integer, Void, Long>{
+
+    @Override
+    protected Long doInBackground(Integer...score) {
+      GameEntity game = new GameEntity();
+      game.setScore(score[0]);
+      game.setPlayerId(playerId);
+     return GameDatabase.getInstance(getContext()).getGameDao().insert(game);
+    }
   }
 
   public void drawText(Canvas canvas){

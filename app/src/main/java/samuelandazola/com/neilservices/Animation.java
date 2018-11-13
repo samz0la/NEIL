@@ -30,6 +30,7 @@ public class Animation {
     }
   }
 
+  //determines what the player class will draw
   public Bitmap getImage(){
     return frames[currentFrame];
   }

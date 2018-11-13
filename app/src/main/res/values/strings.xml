@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">NEIL</string>
+  <string name="playerIdKey" translatable="false">player_id_key</string>
 </resources>

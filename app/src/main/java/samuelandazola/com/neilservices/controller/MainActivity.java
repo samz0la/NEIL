@@ -5,33 +5,37 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.TextView;
+import com.google.android.gms.common.SignInButton;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 import java.util.LinkedList;
 import java.util.List;
-import samuelandazola.com.neilservices.Game;
+import samuelandazola.com.neilservices.GameActivity;
 import samuelandazola.com.neilservices.R;
 import samuelandazola.com.neilservices.model.db.GameDatabase;
-import samuelandazola.com.neilservices.model.entity.Player;
+import samuelandazola.com.neilservices.model.entity.PlayerEntity;
 
 
 public class MainActivity extends Activity {
 
 
-  private Player player;
+  private TextView bestScore;
+  private PlayerEntity player;
   private GameDatabase database;
+  private long playerId;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_game);
+    setContentView(R.layout.activity_game_login);
 
-    player = new Player();
+    bestScore = findViewById(R.id.best_score);
+    player = new PlayerEntity();
+    database = GameDatabase.getInstance(this);
 
+    new QueryTask().execute("example@example.com");
 
     CircleMenu circleMenu = (CircleMenu)findViewById(R.id.circle_menu);
         circleMenu.setMainMenu(Color.parseColor("#00FFFFFF"), R.mipmap.takeoff_launcher, R.mipmap.exit_launcher)
@@ -63,18 +67,35 @@ public class MainActivity extends Activity {
       public void onMenuClosed() {}
 
     });
+
+
+
   }
 
-  public void openGame(){
-    Intent intent = new Intent(this, Game.class);
+  public void openGame(){ //passes playerId to GameActivity
+    Intent intent = new Intent(this, GameActivity.class);
+    intent.putExtra(getString(R.string.playerIdKey), playerId);
     startActivity(intent);
   }
 
+  private class ScoreTask extends AsyncTask<Long, Void, Integer>{
 
-
-  private class AddTask extends AsyncTask<Player, Void, Long>{
     @Override
-    protected Long doInBackground(Player...players){
+    protected Integer doInBackground(Long... playerIds) {
+      return database.getGameDao().maxScore(playerIds[0]);
+    }
+
+    @Override
+    protected void onPostExecute(Integer score) {
+
+    bestScore.setText("" + score);
+    }
+  }
+
+
+  private class AddTask extends AsyncTask<PlayerEntity, Void, Long>{
+    @Override
+    protected Long doInBackground(PlayerEntity...players){
       database.getPlayerDao().insert(player);
       return player.getId();
     }
@@ -85,23 +106,32 @@ public class MainActivity extends Activity {
     }
   }
 
-  private class QueryTask extends AsyncTask<Long, Void, Player>{
+  private class QueryTask extends AsyncTask<String, Void, PlayerEntity>{
     @Override
-    protected Player doInBackground(Long...playerIds){
-      List<Player> players = new LinkedList<>();
-      players = database.getPlayerDao().select(playerIds[0]);
+    protected PlayerEntity doInBackground(String...email){
+      List<PlayerEntity> players = new LinkedList<>();
+      players = database.getPlayerDao().select(email[0]);
+      if (players.size() < 1){
+        PlayerEntity player = new PlayerEntity();
+        player.setEmail(email[0]);
+        long playerId = database.getPlayerDao().insert(player);
+        player.setId(playerId); //telling entity what id is
+        return player;
+      }
       return players.get(0);
     }
 
     @Override
-    protected void onPostExecute(Player player){
-      //TODO save player in field variable to reference later
+    protected void onPostExecute(PlayerEntity player){
+
+      playerId = player.getId();
+      new ScoreTask().execute(player.getId());
     }
   }
 
-  private class UpdateTask extends AsyncTask<Player, Void, Void>{
+  private class UpdateTask extends AsyncTask<PlayerEntity, Void, Void>{
     @Override
-    protected Void doInBackground(Player...players){
+    protected Void doInBackground(PlayerEntity...players){
        database.getPlayerDao().update(players[0]);
       return null;
     }

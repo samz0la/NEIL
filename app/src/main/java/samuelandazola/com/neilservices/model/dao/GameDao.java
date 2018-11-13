@@ -7,23 +7,26 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import java.util.List;
-import samuelandazola.com.neilservices.model.entity.Game;
+import samuelandazola.com.neilservices.model.entity.GameEntity;
 
 @Dao
 public interface GameDao {
 
   @Insert(onConflict = OnConflictStrategy.FAIL)
-  long insert(Game game);
+  long insert(GameEntity game);
 
-  @Query("SELECT * FROM Game WHERE player_id = :playerId")
-  List<Game> select(long playerId);
+  @Query("SELECT * FROM GameEntity WHERE player_id = :playerId")
+  List<GameEntity> select(long playerId);
+
+  @Query("SELECT MAX(score) FROM GameEntity WHERE player_id = :playerId")
+  int maxScore(long playerId);
 
   @Delete
-  int delete(Game game);
+  int delete(GameEntity game);
 
   @Delete
-  int delete(List<Game> games);
+  int delete(List<GameEntity> games);
 
   @Update
-  int update(Game game);
+  int update(GameEntity game);
 }

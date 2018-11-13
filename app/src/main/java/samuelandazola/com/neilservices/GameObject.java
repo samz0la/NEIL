@@ -2,6 +2,7 @@ package samuelandazola.com.neilservices;
 
 import android.graphics.Rect;
 
+//All objects in the game have these attributes
 public abstract class GameObject {
   protected int x;
   protected int y;

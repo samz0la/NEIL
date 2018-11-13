@@ -10,10 +10,10 @@ import java.util.Date;
 import samuelandazola.com.neilservices.model.dao.GameDao;
 import samuelandazola.com.neilservices.model.dao.PlayerDao;
 import samuelandazola.com.neilservices.model.db.GameDatabase.Converters;
-import samuelandazola.com.neilservices.model.entity.Game;
-import samuelandazola.com.neilservices.model.entity.Player;
+import samuelandazola.com.neilservices.model.entity.GameEntity;
+import samuelandazola.com.neilservices.model.entity.PlayerEntity;
 
-@Database(entities = {Game.class, Player.class},
+@Database(entities = {GameEntity.class, PlayerEntity.class},
     version = 1,
     exportSchema = true
 )

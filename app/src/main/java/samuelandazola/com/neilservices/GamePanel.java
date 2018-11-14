@@ -271,11 +271,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     player.resetDY();
     player.setY(HEIGHT/2);
 
+    new AddTask().execute(player.getScore());
+
     player.resetScore();
 
     newGameCreated = true;
 
-    new AddTask().execute(player.getScore());
   }
 
   private class AddTask extends AsyncTask<Integer, Void, Long>{

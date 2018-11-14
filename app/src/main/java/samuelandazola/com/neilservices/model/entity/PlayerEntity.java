@@ -12,10 +12,7 @@ public class PlayerEntity {
   private long id;
   private String email;
 
-  private long plays;
 
-  @ColumnInfo(name = "high_score")
-  private long score;
 
   public long getId() {
     return id;
@@ -23,22 +20,6 @@ public class PlayerEntity {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public long getPlays() {
-    return plays;
-  }
-
-  public void setPlays(long plays) {
-    this.plays = plays;
-  }
-
-  public long getScore() {
-    return score;
-  }
-
-  public void setScore(long score) {
-    this.score = score;
   }
 
   public String getEmail() {

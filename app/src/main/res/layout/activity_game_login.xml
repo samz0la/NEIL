@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
   android:background="@drawable/land_screen_background">
 
   <com.hitomi.cmlibrary.CircleMenu
     android:id="@+id/circle_menu"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleX="1.30"
-    android:scaleY="1.30"
-    android:layout_alignBaseline="@id/circle_menu">
-
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scaleX="2.70"
+    android:scaleY="2.70"
+    android:layout_marginBottom="150dp"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true">
   </com.hitomi.cmlibrary.CircleMenu>
 
   <TextView
     android:id="@+id/best_score"
-    android:text="HIGH SCORE : "
     android:textSize="20sp"
     android:textColor="@color/colorPrimaryDark"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@id/circle_menu"/>
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="150dp"
+
+    />
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import java.util.List;
 import samuelandazola.com.neilservices.model.entity.PlayerEntity;
+import samuelandazola.com.neilservices.model.pojo.PlayerStats;
 
 @Dao
 public interface PlayerDao {
@@ -21,11 +22,14 @@ public interface PlayerDao {
   @Query("SELECT * FROM PlayerEntity WHERE player_id = :playerId")
   List<PlayerEntity> select(long playerId);
 
-  @Query("SELECT * FROM PlayerEntity ORDER BY high_score DESC")
+  @Query("SELECT DISTINCT p.* FROM PlayerEntity p LEFT JOIN GameEntity g ON g.player_id = p.player_id ORDER BY g.score DESC")
   List<PlayerEntity> select();
 
   @Query("SELECT * FROM PlayerEntity WHERE email = :email")
   List<PlayerEntity> select(String email);
+
+  @Query("SELECT p.player_id, p.email, IFNULL(MAX(g.score), 0) AS highScore, COUNT(g.game_id) AS plays FROM PlayerEntity p LEFT JOIN GameEntity g ON g.player_id = p.player_id WHERE p.player_id = :playerId LIMIT 1")
+  PlayerStats selectStats(long playerId);
 
   @Delete
   int delete (List<PlayerEntity> players);

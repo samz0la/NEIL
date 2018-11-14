@@ -18,6 +18,7 @@ public class GameApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+    instance = this;
     Stetho.initializeWithDefaults(this);
     gameDatabase = GameDatabase.getInstance(this);
     gameDatabase.getPlayerDao();
@@ -25,7 +26,6 @@ public class GameApplication extends Application {
     GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .requestId()
-        //Include requestIdToken if we're using Google Sign-In for authenticating on a back-end server
         .build();
     client = GoogleSignIn.getClient(this, options);
 

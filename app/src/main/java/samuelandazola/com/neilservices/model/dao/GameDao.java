@@ -21,6 +21,7 @@ public interface GameDao {
   @Query("SELECT MAX(score) FROM GameEntity WHERE player_id = :playerId")
   int maxScore(long playerId);
 
+
   @Delete
   int delete(GameEntity game);
 

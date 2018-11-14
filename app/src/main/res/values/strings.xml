@@ -1,4 +1,6 @@
 <resources>
   <string name="app_name">NEIL</string>
   <string name="playerIdKey" translatable="false">player_id_key</string>
+  <string name="sign_in_error">Unable to sign in. Please check your credentials and connection.</string>
+  <string name="sign_out">Sign Out</string>
 </resources>

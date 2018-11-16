@@ -3,6 +3,7 @@ package samuelandazola.com.neilservices.controller;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,15 +34,24 @@ public class MainActivity extends Activity {
   private GameDatabase database;
   private long playerId;
   private int index;
+  Typeface myfont1;
+  Typeface myfont2;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_game_login);
 
+
+
     bestScore = findViewById(R.id.best_score);
     player = new PlayerEntity();
     database = GameDatabase.getInstance(this);
+
+
+    myfont1 = Typeface.createFromAsset(this.getAssets(), "fonts/death_star_font.otf");
+    myfont2 = Typeface.createFromAsset(this.getAssets(), "fonts/space_font.ttf");
+    bestScore.setTypeface(myfont1);
 
     CircleMenu circleMenu = (CircleMenu) findViewById(R.id.circle_menu);
     circleMenu.setMainMenu(Color.parseColor("#00FFFFFF"), R.mipmap.takeoff_launcher,

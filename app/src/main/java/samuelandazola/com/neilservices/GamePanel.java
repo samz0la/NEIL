@@ -16,6 +16,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
+import samuelandazola.com.neilservices.controller.MainActivity;
 import samuelandazola.com.neilservices.model.db.GameDatabase;
 import samuelandazola.com.neilservices.model.entity.GameEntity;
 
@@ -41,6 +42,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private boolean started;
   private int best;
   private long playerId;
+
 
 
   //automatically called when the object is called
@@ -223,7 +225,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   public void draw(Canvas canvas) {
     //super.draw(canvas); (if i call the super it splits the scrolling thread)
 
-    //scales to entire phone screen
+    //scales background to entire phone screen
     final float scaleFactorX = getWidth() / (WIDTH * 1.f);
     final float scaleFactorY = getHeight() / (HEIGHT * 1.f);
 
@@ -295,7 +297,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     Paint paint = new Paint();
     paint.setColor(Color.WHITE);
     paint.setTextSize(70);
-    paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+    paint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/space_font.ttf"));
     canvas.drawText("DISTANCE: " + (player.getScore()), 10, HEIGHT - 10, paint);
     canvas.drawText("BEST: " + best, WIDTH - 450, HEIGHT - 10, paint);
 
@@ -303,11 +305,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
       Paint paint1 = new Paint();
       paint1.setColor(Color.WHITE);
       paint1.setTextSize(100);
-      paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+      paint1.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/space_font.ttf"));
       canvas.drawText("PRESS TO START", WIDTH/2 - 400, HEIGHT/2, paint1);
 
       paint1.setTextSize(80);
-      canvas.drawText("PRESS AND HOLD TO GO UP", WIDTH/2-400, HEIGHT/2 + 100, paint1);
+      canvas.drawText("PRESS AND HOLD TO GO UP", WIDTH/2-600, HEIGHT/2 + 100, paint1);
       canvas.drawText("RELEASE TO GO DOWN", WIDTH/2-400, HEIGHT/2 + 180, paint1);
 
     }

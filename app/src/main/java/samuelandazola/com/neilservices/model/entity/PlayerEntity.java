@@ -13,7 +13,6 @@ public class PlayerEntity {
   private String email;
 
 
-
   public long getId() {
     return id;
   }

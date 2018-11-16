@@ -43,12 +43,12 @@ public class MainActivity extends Activity {
     player = new PlayerEntity();
     database = GameDatabase.getInstance(this);
 
-
-    CircleMenu circleMenu = (CircleMenu)findViewById(R.id.circle_menu);
-        circleMenu.setMainMenu(Color.parseColor("#00FFFFFF"), R.mipmap.takeoff_launcher, R.mipmap.exit_launcher)
+    CircleMenu circleMenu = (CircleMenu) findViewById(R.id.circle_menu);
+    circleMenu.setMainMenu(Color.parseColor("#00FFFFFF"), R.mipmap.takeoff_launcher,
+        R.mipmap.exit_launcher)
         .addSubMenu(Color.parseColor("#CDCDCD"), R.mipmap.facebook)
-            .addSubMenu(Color.parseColor("#CDCDCD"), R.mipmap.takeoff_launcher)
-            .addSubMenu(Color.parseColor("#CDCDCD"), R.mipmap.google)
+        .addSubMenu(Color.parseColor("#CDCDCD"), R.mipmap.takeoff_launcher)
+        .addSubMenu(Color.parseColor("#CDCDCD"), R.mipmap.google)
 
         .setOnMenuSelectedListener(new OnMenuSelectedListener() {
 
@@ -60,11 +60,12 @@ public class MainActivity extends Activity {
         }).setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
 
       @Override
-      public void onMenuOpened() {}
+      public void onMenuOpened() {
+      }
 
       @Override
       public void onMenuClosed() {
-        switch (index){
+        switch (index) {
           case 0:
             break;
           case 1:
@@ -80,13 +81,17 @@ public class MainActivity extends Activity {
 
   }
 
-  public void openGame(){ //passes playerId to GameActivity
+  public void openGame() { //passes playerId to GameActivity
     Intent intent = new Intent(this, GameActivity.class);
     intent.putExtra(getString(R.string.playerIdKey), playerId);
-    startActivity(intent);
+    if (playerId == 0){
+      Toast.makeText(this, "Log In to Save Score", Toast.LENGTH_LONG).show();
+    }else {
+      startActivity(intent);
+    }
   }
 
-  private class ScoreTask extends AsyncTask<Long, Void, Integer>{
+  private class ScoreTask extends AsyncTask<Long, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Long... playerIds) {
@@ -96,30 +101,32 @@ public class MainActivity extends Activity {
     @Override
     protected void onPostExecute(Integer score) {
 
-    bestScore.setText("High Score: " + score);
+      bestScore.setText("High Score " + score);
     }
   }
 
 
-  private class AddTask extends AsyncTask<PlayerEntity, Void, Long>{
+  private class AddTask extends AsyncTask<PlayerEntity, Void, Long> {
+
     @Override
-    protected Long doInBackground(PlayerEntity...players){
+    protected Long doInBackground(PlayerEntity... players) {
       database.getPlayerDao().insert(player);
       return player.getId();
     }
 
     @Override
-    protected void onPostExecute(Long playerId){
+    protected void onPostExecute(Long playerId) {
       //TODO save player id in field variable to reference later
     }
   }
 
-  private class QueryTask extends AsyncTask<String, Void, PlayerEntity>{
+  private class QueryTask extends AsyncTask<String, Void, PlayerEntity> {
+
     @Override
-    protected PlayerEntity doInBackground(String...email){
+    protected PlayerEntity doInBackground(String... email) {
       List<PlayerEntity> players = new LinkedList<>();
       players = database.getPlayerDao().select(email[0]);
-      if (players.size() < 1){
+      if (players.size() < 1) {
         PlayerEntity player = new PlayerEntity();
         player.setEmail(email[0]);
         long playerId = database.getPlayerDao().insert(player);
@@ -130,7 +137,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onPostExecute(PlayerEntity player){
+    protected void onPostExecute(PlayerEntity player) {
 
       playerId = player.getId();
       new ScoreTask().execute(player.getId());
@@ -138,10 +145,11 @@ public class MainActivity extends Activity {
     }
   }
 
-  private class UpdateTask extends AsyncTask<PlayerEntity, Void, Void>{
+  private class UpdateTask extends AsyncTask<PlayerEntity, Void, Void> {
+
     @Override
-    protected Void doInBackground(PlayerEntity...players){
-       database.getPlayerDao().update(players[0]);
+    protected Void doInBackground(PlayerEntity... players) {
+      database.getPlayerDao().update(players[0]);
       return null;
     }
   }
@@ -151,7 +159,7 @@ public class MainActivity extends Activity {
     super.onStart();
     initDB();
     GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-    if (account != null){
+    if (account != null) {
       GameApplication.getInstance().setAccount(account);
       switchToMain();
     }
@@ -183,7 +191,7 @@ public class MainActivity extends Activity {
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    if (requestCode == REQUEST_CODE){
+    if (requestCode == REQUEST_CODE) {
       try {
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
         GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -195,14 +203,22 @@ public class MainActivity extends Activity {
     }
   }
 
-  private void signIn(){
-    Intent intent = GameApplication.getInstance().getClient().getSignInIntent();
-    startActivityForResult(intent, REQUEST_CODE);
+  private void signIn() {
+    GameApplication app = GameApplication.getInstance();
+    if (app.getAccount() == null) {
+      Intent intent = GameApplication.getInstance().getClient().getSignInIntent();
+      startActivityForResult(intent, REQUEST_CODE);
+    } else {
+      app.getClient().signOut().addOnCompleteListener(this, (task) -> {
+        app.setAccount(null);
+        Toast.makeText(this, "You Are Signed Out", Toast.LENGTH_LONG).show();
+      });
+    }
   }
 
-  private void switchToMain(){
+  private void switchToMain() {
     Toast.makeText(this, "You Are Logged In", Toast.LENGTH_LONG).show();
     new QueryTask().execute(GameApplication.getInstance().getAccount().getEmail());
   }
 
-  }
+}

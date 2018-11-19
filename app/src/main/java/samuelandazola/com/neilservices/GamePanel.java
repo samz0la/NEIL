@@ -58,6 +58,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   /**
    * Instantiates a new Game panel.
+   * Game Panel is called whe the object is called
+   * adds a callback to the surfaceholder to intercept events.
+   * makes gamepanel focusable so it can handle events
+   *
    *
    * @param context the context
    * @param playerId the player id
@@ -140,6 +144,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   /**
    * Update.
+   *
+   * Updates the {@link Player} and {@link Background} only when player is playing.
+   *
+   * Sets {@link Enemy} on timer, creates random enemy position, loops through enemy
+   * and checks for collision and removes.
+   *
+   * Sets {@link Smokepuff} and itterates through every smokepuff object in the arraylist. 
    */
   public void update() {
     //updates player and background only with the player is playing

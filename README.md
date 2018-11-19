@@ -23,8 +23,8 @@ game is locked to landscape orientation.
     * adding music
     * import it to ios and be able to put it up on the appstore. 
     
-8. * [WireFrame](docs/NEIL_Wireframe.pdf)
+8. * [WireFrame](docs/NEIL_wireframe.pdf)
    * [User Stories](docs/UserStories.pdf)
 
-9. * [ERD](docs/NEIL_Erd.png)
+9. * [ERD](docs/NEIL_ERD.png)
    * [DDL](docs/ddl.sql)

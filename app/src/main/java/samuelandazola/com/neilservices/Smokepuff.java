@@ -4,18 +4,38 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+/**
+ * The type Smokepuff.
+ */
 public class Smokepuff extends GameObject {
-  public int radius;
-  public Smokepuff(int x, int y){
-    //sets the x&y in the super class game object to the x&y being passed into the constructor
+  private int radius;
+
+  /**
+   * Instantiates a new Smokepuff.
+   * sets the x & y in the super class game object to the x & y being
+   * passed into the constructor
+   * @param x the x
+   * @param y the y
+   */
+  Smokepuff(int x, int y){
     radius = 5;
     super.x = x;
     super.y = y;
   }
+
+  /**
+   * Update.
+   */
   public void update(){
     x-=10;
   }
-  public void draw(Canvas canvas){
+
+  /**
+   * Draw.
+   * draws smoke puff to <code>Surface View</code>
+   * @param canvas the canvas
+   */
+  void draw(Canvas canvas){
     Paint paint = new Paint();
     paint.setColor(Color.GRAY);
     paint.setStyle(Paint.Style.FILL);

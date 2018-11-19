@@ -3,6 +3,9 @@ package samuelandazola.com.neilservices;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+/**
+ * The type Player.
+ */
 public class Player extends GameObject{
   private Bitmap spritesheet;
   private int score;
@@ -11,10 +14,18 @@ public class Player extends GameObject{
   private Animation animation = new Animation();
   private long startTime; //initiates the score
 
-  public Player(Bitmap res, int w, int h, int numFrames){
+  /**
+   * Instantiates a new Player.
+   *
+   * @param res the res
+   * @param w the w
+   * @param h the h
+   * @param numFrames the num frames
+   */
+  Player(Bitmap res, int w, int h, int numFrames){
     x = 100;
     y = GamePanel.HEIGHT/2;
-    dy = 0; //exceleration on the y axis
+    dy = 0; //acceleration on the y axis
     score = 0;
     height = h;
     width = w;
@@ -30,9 +41,20 @@ public class Player extends GameObject{
     animation.setDelay(10);
     startTime = System.nanoTime();
   }
-//called by the mption event, when you press down the character will go up
+
+  /**
+   * Set up.
+   * called by the motion event, when you press down the character will go up
+   * @param b the b
+   */
   public void setUp(boolean b){up=b;}
 
+  /**
+   * Update.
+   * Increases the score every 1/10 of a second.
+   * Accelerates player along the y axis
+   * Caps the speed of the player
+   */
   public void update(){
     long elapsed = (System.nanoTime()-startTime)/1000000;
     if(elapsed>100){ //every 1/10 of a second the score increase by one
@@ -53,13 +75,46 @@ public class Player extends GameObject{
     y += dy*2;
   }
 
-  public void draw(Canvas canvas){
+  /**
+   * Draw.
+   * draws character to <code>Surface View</code>
+   * @param canvas the canvas
+   */
+  void draw(Canvas canvas){
     canvas.drawBitmap(animation.getImage(),x,y,null);
   }
+
+  /**
+   * Get score int.
+   *
+   * @return the int
+   */
   public int getScore(){return score;}
-  public boolean getPlaying(){return playing;}
-  public void setPlaying(boolean b){playing = b;}
-  public void  resetDY(){dy = 0;}
-  public void resetScore(){score = 0;}
+
+  /**
+   * Get playing boolean.
+   *
+   * @return the boolean
+   */
+  boolean getPlaying(){return playing;}
+
+  /**
+   * Set playing.
+   *
+   * @param b the b
+   */
+  void setPlaying(boolean b){playing = b;}
+
+  /**
+   * Reset dy.
+   * Resets Player position
+   */
+  void  resetDY(){dy = 0;}
+
+  /**
+   * Reset score.
+   * Resets score
+   */
+  void resetScore(){score = 0;}
 
 }

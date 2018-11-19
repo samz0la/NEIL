@@ -6,6 +6,12 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * The type Game activity implements the title screen and sets entire game to full screen.
+ * It extends {@link Activity} to build the screens of this application and it also
+ * has all the lifecycle callbacks expected by the Android Framework.
+ *
+ */
 public class GameActivity extends Activity {
 
   @Override

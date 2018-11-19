@@ -2,6 +2,10 @@ package samuelandazola.com.neilservices;
 
 import android.graphics.Bitmap;
 
+/**
+ * The type Animation.
+ * This sets up the animations that are shown by {@link GamePanel}
+ */
 public class Animation {
   private Bitmap[] frames;
   private int currentFrame;
@@ -9,14 +13,33 @@ public class Animation {
   private long delay;
   private boolean playedOnce;
 
-  public void setFrames(Bitmap[] frames){
+  /**
+   * Set frames.
+   *
+   * @param frames initiates the frame and sets current frame.
+   */
+  void setFrames(Bitmap[] frames){
     this.frames = frames;
     currentFrame = 0;
     startTime = System.nanoTime();
   }
-  public void setDelay(long d){delay = d;}
+
+  /**
+   * Set the delay of every animation
+   * @param d the d
+   */
+  void setDelay(long d){delay = d;}
+
+  /**
+   * Set frame.
+   * @param i
+   */
   public void setFrame(int i){currentFrame = i;}
 
+  /**
+   * Update.
+   * This starts the frame count and updates the frame every time.
+   */
   public void update(){
     long elapsed = (System.nanoTime()-startTime)/1000000;
 
@@ -30,10 +53,26 @@ public class Animation {
     }
   }
 
-  //determines what the player class will draw
+  /**
+   * Get image bitmap.
+   * Determines what the player class will draw
+   * @return the bitmap
+   */
   public Bitmap getImage(){
     return frames[currentFrame];
   }
+
+  /**
+   * Get frames gets the current frame.
+   *
+   * @return the current frame
+   */
   public int getFrames(){return currentFrame;}
-  public boolean playedOnce(){return playedOnce;}
+
+  /**
+   * Played once boolean.
+   * Returns if the Animation has gone through one iteration
+   * @return the boolean
+   */
+  boolean playedOnce(){return playedOnce;}
 }

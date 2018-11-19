@@ -21,10 +21,22 @@ import samuelandazola.com.neilservices.model.db.GameDatabase;
 import samuelandazola.com.neilservices.model.entity.GameEntity;
 
 
+/**
+ * The type Game panel.
+ */
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
+  /**
+   * The constant WIDTH.
+   */
   public static final int WIDTH = 1921;
+  /**
+   * The constant HEIGHT.
+   */
   public static final int HEIGHT = 1081;
+  /**
+   * The constant MOVESPEED.
+   */
   public static final int MOVESPEED = -5;
   private long smokeStartTimer;
   private long enemyStartTime;
@@ -44,8 +56,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private long playerId;
 
 
-
-  //automatically called when the object is called
+  /**
+   * Instantiates a new Game panel.
+   *
+   * @param context the context
+   * @param playerId the player id
+   */
+//automatically called when the object is called
   public GamePanel(Context context, long playerId) {
 
     super(context);
@@ -121,6 +138,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     return super.onTouchEvent(event);
   }
 
+  /**
+   * Update.
+   */
   public void update() {
     //updates player and background only with the player is playing
     if (player.getPlaying()) {
@@ -214,7 +234,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
   }
 
-  public boolean collision(GameObject a, GameObject b){
+  private boolean collision(GameObject a, GameObject b){
     if (Rect.intersects(a.getRectangle(), b.getRectangle())){
       return true;
     }
@@ -259,7 +279,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   }
 
-  public void newGame(){
+  private void newGame(){
 
     disappear = false;
 
@@ -292,14 +312,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
   }
 
-  public void drawText(Canvas canvas){
+  private void drawText(Canvas canvas){
     //shows current and best distance
     Paint paint = new Paint();
     paint.setColor(Color.WHITE);
     paint.setTextSize(70);
     paint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/space_font.ttf"));
     canvas.drawText("DISTANCE: " + (player.getScore()), 10, HEIGHT - 10, paint);
-    canvas.drawText("BEST: " + best, WIDTH - 450, HEIGHT - 10, paint);
+    canvas.drawText("BEST: " + best, WIDTH - 500, HEIGHT - 10, paint);
 
     if (!player.getPlaying() && newGameCreated && reset){
       Paint paint1 = new Paint();

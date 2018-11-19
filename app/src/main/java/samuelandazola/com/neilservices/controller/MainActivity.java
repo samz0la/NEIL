@@ -26,6 +26,12 @@ import samuelandazola.com.neilservices.model.db.GameDatabase;
 import samuelandazola.com.neilservices.model.entity.PlayerEntity;
 
 
+/**
+ * The type Main activity.
+ * This class implements a login activity, menu and saved game score.
+ * {@link Activity#Activity()}  this is used to build the screens of the application and
+ * it has all the lifecycle callbacks expected by the Android Framework.
+ */
 public class MainActivity extends Activity {
 
 
@@ -34,7 +40,15 @@ public class MainActivity extends Activity {
   private GameDatabase database;
   private long playerId;
   private int index;
+  /**
+   * The Myfont 1.
+   * Sets custom font to death_star_font.otf
+   */
   Typeface myfont1;
+  /**
+   * The Myfont 2.
+   * Sets custom font to space_font.ttf.
+   */
   Typeface myfont2;
 
   @Override
@@ -91,7 +105,7 @@ public class MainActivity extends Activity {
 
   }
 
-  public void openGame() { //passes playerId to GameActivity
+  private void openGame() { //passes playerId to GameActivity
     Intent intent = new Intent(this, GameActivity.class);
     intent.putExtra(getString(R.string.playerIdKey), playerId);
     if (playerId == 0){
@@ -126,7 +140,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPostExecute(Long playerId) {
-      //TODO save player id in field variable to reference later
     }
   }
 

@@ -3,7 +3,10 @@ package samuelandazola.com.neilservices;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-//This is the main game loop
+/**
+ * The type Main thread.
+ * Creates the main game loop
+ */
 public class MainThread extends Thread {
 
   private int FPS = 30;
@@ -11,15 +14,25 @@ public class MainThread extends Thread {
   private SurfaceHolder surfaceHolder;
   private GamePanel gamePanel;
   private boolean running;
-  public static Canvas canvas;
+  /**
+   * The constant canvas.
+   * Where we draw the game to.
+   */
+  static Canvas canvas;
 
-  public MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
+  /**
+   * Instantiates a new Main thread.
+   *
+   * @param surfaceHolder the surface holder
+   * @param gamePanel the game panel
+   */
+  MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
     super();
     this.surfaceHolder = surfaceHolder;
     this.gamePanel = gamePanel;
   }
 
-  @Override //everytime you run through the game loop we want it to run 1000milliseconds/FPS
+  @Override //every time you run through the game loop we want it to run 1000milliseconds/FPS
   public void run() {
     long startTime;
     long timeMillis;
@@ -67,7 +80,11 @@ public class MainThread extends Thread {
     }
   }
 
-  public void setRunning(boolean b) {
+  /**
+   * Sets running.
+   * @param b the b
+   */
+  void setRunning(boolean b) {
     running = b;
   }
 

@@ -21,7 +21,10 @@ game is locked to landscape orientation.
 7. Stretch Goals: 
     * fixing collision
     * adding music
-    *i mport it to ios and be able to put it up on the appstore. 
+    * import it to ios and be able to put it up on the appstore. 
     
-8. * [ERD](https://github.com/samz0la/NEIL/blob/master/NEIL_wireframe.pdf)
+8. * [WireFrame](docs/NEIL_Wireframe.pdf)
+   * [User Stories](docs/UserStories.pdf)
+
+9. * [ERD](docs/NEIL_Erd.png)
    * [DDL](docs/ddl.sql)

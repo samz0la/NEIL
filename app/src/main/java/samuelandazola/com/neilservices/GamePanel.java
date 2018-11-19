@@ -22,22 +22,28 @@ import samuelandazola.com.neilservices.model.entity.GameEntity;
 
 
 /**
- * The type Game panel.
+ * The type Game panel creates the game. It extends {@link SurfaceView} and
+ * implements {@link SurfaceHolder}.
+ * It overrides {@link SurfaceHolder} in surface destroyed and surface created methods.
+ *
+ * It also overrides {@link MotionEvent} for onTouchEvent that enables the game Panel to
+ * listens to touch events on the screen/surfaceview.
+ *
  */
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
   /**
-   * The constant WIDTH.
+   * The constant WIDTH of game.
    */
-  public static final int WIDTH = 1921;
+   static final int WIDTH = 1921;
   /**
-   * The constant HEIGHT.
+   * The constant HEIGHT of game.
    */
-  public static final int HEIGHT = 1081;
+   static final int HEIGHT = 1081;
   /**
-   * The constant MOVESPEED.
+   * The constant MOVESPEED controls the speed of the gamepanel.
    */
-  public static final int MOVESPEED = -5;
+   static final int MOVESPEED = -5;
   private long smokeStartTimer;
   private long enemyStartTime;
   private MainThread thread;
@@ -67,7 +73,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
    * @param playerId the player id
    */
 //automatically called when the object is called
-  public GamePanel(Context context, long playerId) {
+   GamePanel(Context context, long playerId) {
 
     super(context);
     this.playerId = playerId;
@@ -150,7 +156,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
    * Sets {@link Enemy} on timer, creates random enemy position, loops through enemy
    * and checks for collision and removes.
    *
-   * Sets {@link Smokepuff} and itterates through every smokepuff object in the arraylist. 
+   * Sets {@link Smokepuff} and itterates through every smokepuff object in the arraylist.
    */
   public void update() {
     //updates player and background only with the player is playing

@@ -19,9 +19,9 @@ game is locked to landscape orientation.
 6. Other than fixinng the collision, in game, to looking more realistic, I am happy with the aesthetic/cosmetics of my app.
 
 7. Stretch Goals: 
-    *fixing collision
-    *adding music
-    *import it to ios and be able to put it up on the appstore. 
+    * fixing collision
+    * adding music
+    *i mport it to ios and be able to put it up on the appstore. 
     
-8. *[ERD](https://github.com/samz0la/NEIL/blob/master/NEIL_wireframe.pdf)
-   *[DDL](docs/ddl.sql)
+8. * [ERD](https://github.com/samz0la/NEIL/blob/master/NEIL_wireframe.pdf)
+   * [DDL](docs/ddl.sql)

@@ -19,9 +19,10 @@ game is locked to landscape orientation.
 6. Other than fixinng the collision, in game, to looking more realistic, I am happy with the aesthetic/cosmetics of my app.
 
 7. Stretch Goals: 
-    * fixing collision
+    
     * adding music
-    * import it to ios and be able to put it up on the appstore. 
+    * import it to ios 
+    * Put it up on the appstore 
     
 8. * [WireFrame](docs/NEIL_wireframe.pdf)
    * [User Stories](docs/UserStories.pdf)
@@ -32,4 +33,7 @@ game is locked to landscape orientation.
 10. Javadocs
 
 11. Copyrights and Licenses
-   * [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
+    * [Hitomis Circle Menu](https://github.com/Hitomis/CircleMenu#licence)
+    * [Google](licenses/google_license.md)
+    * [Stetho](licenses/stetho_license.md)
+    

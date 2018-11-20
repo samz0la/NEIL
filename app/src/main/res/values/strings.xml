@@ -3,4 +3,7 @@
   <string name="playerIdKey" translatable="false">player_id_key</string>
   <string name="sign_in_error">Unable to sign in. Please check your credentials and connection.</string>
   <string name="sign_out">Sign Out</string>
+  <string name="facebook_app_id">1894018027360202</string>
+  <string name="fb_login_protocol_scheme">fb1894018027360202</string>
+
 </resources>

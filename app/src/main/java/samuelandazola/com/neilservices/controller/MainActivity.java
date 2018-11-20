@@ -9,14 +9,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import samuelandazola.com.neilservices.GameActivity;
@@ -26,10 +33,11 @@ import samuelandazola.com.neilservices.model.db.GameDatabase;
 import samuelandazola.com.neilservices.model.entity.PlayerEntity;
 
 
+
 /**
  * The type Main activity.
- * This class implements a login activity, menu and saved game score.
- * {@link Activity#Activity()}  this is used to build the screens of the application and
+ * This class has a login activity, menu and saved game score.
+ * it extends {@link Activity#Activity()}  this is used to build the screens of the application and
  * it has all the lifecycle callbacks expected by the Android Framework.
  */
 public class MainActivity extends Activity {
@@ -40,15 +48,11 @@ public class MainActivity extends Activity {
   private GameDatabase database;
   private long playerId;
   private int index;
-  /**
-   * The Myfont 1.
-   * Sets custom font to death_star_font.otf
-   */
+  private CallbackManager callbackManager;
+
+  /** The Myfont 1 Sets custom font to death_star_font.otf. */
   Typeface myfont1;
-  /**
-   * The Myfont 2.
-   * Sets custom font to space_font.ttf.
-   */
+  /** The Myfont 2 Sets custom font to space_font.ttf. */
   Typeface myfont2;
 
   @Override
@@ -61,7 +65,6 @@ public class MainActivity extends Activity {
     bestScore = findViewById(R.id.best_score);
     player = new PlayerEntity();
     database = GameDatabase.getInstance(this);
-
 
     myfont1 = Typeface.createFromAsset(this.getAssets(), "fonts/death_star_font.otf");
     myfont2 = Typeface.createFromAsset(this.getAssets(), "fonts/space_font.ttf");
@@ -91,19 +94,43 @@ public class MainActivity extends Activity {
       public void onMenuClosed() {
         switch (index) {
           case 0:
+            signInFb();
             break;
           case 1:
             openGame();
             break;
           case 2:
-            signIn();
+            signInGoogle();
             break;
         }
       }
 
     });
 
-  }
+    //Fb login
+    callbackManager = CallbackManager.Factory.create();
+
+    LoginManager.getInstance().registerCallback(callbackManager,
+        new FacebookCallback<LoginResult>() {
+          @Override
+          public void onSuccess(LoginResult loginResult) {
+            Toast.makeText(MainActivity.this, "You Are Logged In", Toast.LENGTH_LONG).show();
+          }
+
+          @Override
+          public void onCancel() {
+            // App code
+          }
+
+          @Override
+          public void onError(FacebookException exception) {
+            // App code
+          }
+        });
+
+
+    }
+
 
   private void openGame() { //passes playerId to GameActivity
     Intent intent = new Intent(this, GameActivity.class);
@@ -223,10 +250,13 @@ public class MainActivity extends Activity {
       } catch (ApiException e) {
         Toast.makeText(this, R.string.sign_in_error, Toast.LENGTH_LONG).show();
       }
+
     }
+    callbackManager.onActivityResult(requestCode, resultCode, data); //facebook callbackManager
+    super.onActivityResult(requestCode, resultCode, data);
   }
 
-  private void signIn() {
+  private void signInGoogle() {
     GameApplication app = GameApplication.getInstance();
     if (app.getAccount() == null) {
       Intent intent = GameApplication.getInstance().getClient().getSignInIntent();
@@ -238,6 +268,18 @@ public class MainActivity extends Activity {
       });
     }
   }
+
+  private void signInFb(){
+    AccessToken token = AccessToken.getCurrentAccessToken();
+    if (token==null){
+      LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, Arrays.asList("email"));
+    }else{
+      LoginManager.getInstance().logOut();
+      Toast.makeText(this, "You Are Signed Out", Toast.LENGTH_LONG).show();
+
+    }
+  }
+
 
   private void switchToMain() {
     Toast.makeText(this, "You Are Logged In", Toast.LENGTH_LONG).show();

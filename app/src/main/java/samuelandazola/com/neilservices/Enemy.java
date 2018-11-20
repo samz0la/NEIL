@@ -4,9 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import java.util.Random;
 
-/**
- * The type Enemy.
- */
+/** The type Enemy. */
 public class Enemy extends GameObject {
 
   private int score;
@@ -57,10 +55,7 @@ public class Enemy extends GameObject {
     animation.setDelay(100-speed);
   }
 
-  /**
-   * Update.
-   * Initiates speed of enemy along the x axis
-   */
+  /** Update Initiates speed of enemy along the x axis. */
   public void update(){
   x-=speed;
   animation.update();

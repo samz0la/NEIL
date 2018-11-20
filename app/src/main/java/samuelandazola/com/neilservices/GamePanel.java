@@ -32,9 +32,7 @@ import samuelandazola.com.neilservices.model.entity.GameEntity;
  */
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
-  /**
-   * The constant WIDTH of game.
-   */
+  /** The constant WIDTH of game. */
    static final int WIDTH = 1921;
   /**
    * The constant HEIGHT of game.
@@ -70,7 +68,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
    *
    *
    * @param context the context
-   * @param playerId the player id
+   * @param playerId the registers a game played to the player
    */
 //automatically called when the object is called
    GamePanel(Context context, long playerId) {

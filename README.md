@@ -26,5 +26,5 @@ game is locked to landscape orientation.
 8. * [WireFrame](docs/NEIL_wireframe.pdf)
    * [User Stories](docs/UserStories.pdf)
 
-9. * [ERD](docs/NEIL_ERD.png)
+9. * [ERD](docs/NEIL_Erd.png)
    * [DDL](docs/ddl.sql)

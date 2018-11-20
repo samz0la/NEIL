@@ -28,3 +28,8 @@ game is locked to landscape orientation.
 
 9. * [ERD](docs/NEIL_Erd.pdf)
    * [DDL](docs/ddl.sql)
+   
+10. Javadocs
+
+11. Copyrights and Licenses
+   * [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode)

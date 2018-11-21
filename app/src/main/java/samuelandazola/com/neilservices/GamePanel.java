@@ -104,7 +104,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     //passing the image into the constructor
     bg = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.background2));
     player = new Player(BitmapFactory.decodeResource(getResources(),
-        R.drawable.neil_character2), 171, 151, 1);
+        R.drawable.neil_character2), 86, 120, 1);
     enemy = new ArrayList<>();
     smoke = new ArrayList<>();
     smokeStartTimer = System.nanoTime();
@@ -170,17 +170,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (enemy.size()==0){
 
           enemy.add(new Enemy(BitmapFactory.decodeResource(getResources(),
-              R.drawable.enemy1), WIDTH + 10, HEIGHT/2, 281, 161, player.getScore(), 1));
+              R.drawable.enemy1), WIDTH + 10, HEIGHT/2, 272, 98, player.getScore(), 1));
 
         }else{
 
           //random enemy position
           enemy.add(new Enemy(BitmapFactory.decodeResource(getResources(), R.drawable.enemy1),
-              WIDTH+10, (int) (random.nextDouble() * (HEIGHT)), 281, 161, player.getScore(), 1));
+              WIDTH+10, (int) (random.nextDouble() * (HEIGHT)), 272, 98, player.getScore(), 1));
           enemy.add(new Enemy(BitmapFactory.decodeResource(getResources(), R.drawable.enemy2),
-              WIDTH+10, (int) (random.nextDouble() * (HEIGHT)), 281, 161, player.getScore(), 1));
+              WIDTH+10, (int) (random.nextDouble() * (HEIGHT)), 274, 92, player.getScore(), 1));
           enemy.add(new Enemy(BitmapFactory.decodeResource(getResources(), R.drawable.enemy3),
-              WIDTH+10, (int) (random.nextDouble() * (HEIGHT)), 201, 121, player.getScore(), 1));
+              WIDTH+10, (int) (random.nextDouble() * (HEIGHT)), 180, 81, player.getScore(), 1));
         }
 
         //resets the timer
@@ -209,7 +209,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
       long elapsed = (System.nanoTime() - smokeStartTimer)/1000000;
 
       if(elapsed > 120){
-        smoke.add(new Smokepuff(player.getX()+50, player.getY()+150));
+        smoke.add(new Smokepuff(player.getX()+15, player.getY()+130));
         smokeStartTimer = System.nanoTime();
       }
 
@@ -246,7 +246,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private boolean collision(GameObject a, GameObject b){
     if (Rect.intersects(a.getRectangle(), b.getRectangle())){
       return true;
-    }
+    } //dont check for collision on alpha channel but on RGB
     return false;
   }
 
@@ -328,7 +328,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     paint.setTextSize(70);
     paint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/space_font.ttf"));
     canvas.drawText("DISTANCE: " + (player.getScore()), 10, HEIGHT - 10, paint);
-    canvas.drawText("BEST: " + best, WIDTH - 500, HEIGHT - 10, paint);
+    //canvas.drawText("BEST: " + best, WIDTH - 500, HEIGHT - 10, paint);
 
     if (!player.getPlaying() && newGameCreated && reset){
       Paint paint1 = new Paint();

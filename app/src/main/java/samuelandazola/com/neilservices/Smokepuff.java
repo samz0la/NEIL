@@ -4,9 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-/**
- * The type Smokepuff.
- */
+/** The type Smokepuff. */
 public class Smokepuff extends GameObject {
   private int radius;
 
@@ -23,9 +21,7 @@ public class Smokepuff extends GameObject {
     super.y = y;
   }
 
-  /**
-   * Update.
-   */
+  /** Update, updates position of enemy off of the screen*/
   public void update(){
     x-=10;
   }

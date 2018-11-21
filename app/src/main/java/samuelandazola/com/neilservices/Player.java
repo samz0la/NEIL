@@ -4,7 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 /**
- * The type Player.
+ * The type Player extends {@link GameObject} it initializes the score, playing,
+ * and startTime fields.
  */
 public class Player extends GameObject{
   private Bitmap spritesheet;
@@ -84,23 +85,17 @@ public class Player extends GameObject{
     canvas.drawBitmap(animation.getImage(),x,y,null);
   }
 
-  /**
-   * Get score int.
-   *
+  /** Get score int.
    * @return the int
    */
   public int getScore(){return score;}
 
-  /**
-   * Get playing boolean.
-   *
+  /** Get playing boolean.
    * @return the boolean
    */
   boolean getPlaying(){return playing;}
 
-  /**
-   * Set playing.
-   *
+  /** Set playing.
    * @param b the b
    */
   void setPlaying(boolean b){playing = b;}

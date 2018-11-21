@@ -32,15 +32,9 @@ import samuelandazola.com.neilservices.model.entity.GameEntity;
  */
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
-  /** The constant WIDTH of game. */
+
    static final int WIDTH = 1921;
-  /**
-   * The constant HEIGHT of game.
-   */
    static final int HEIGHT = 1081;
-  /**
-   * The constant MOVESPEED controls the speed of the gamepanel.
-   */
    static final int MOVESPEED = -5;
   private long smokeStartTimer;
   private long enemyStartTime;

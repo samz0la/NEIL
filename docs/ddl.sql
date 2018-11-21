@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS `Game Entity` (
   FOREIGN KEY(`player_id`) REFERENCES `PlayerEntity`(`player_id`) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
+CREATE  INDEX `index_GameEntity_player_id` ON `GameEntity` (`player_id`)
+
 CREATE TABLE IF NOT EXISTS `Player Entity` (
   `player_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   `email` TEXT

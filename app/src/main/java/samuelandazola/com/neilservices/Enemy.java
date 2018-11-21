@@ -63,7 +63,7 @@ public class Enemy extends GameObject {
 
   /**
    * Draw.
-   * Draws the Enem to the Canvas
+   * Draws the Enemy to the Canvas
    * @param canvas the canvas
    */
   void draw(Canvas canvas){

@@ -70,7 +70,6 @@ public class Explosion {
 
   /**
    * Get height.
-   *
    * @return the int height
    */
   public int getHeight(){return height;}

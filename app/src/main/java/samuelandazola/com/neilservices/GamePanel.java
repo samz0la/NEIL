@@ -33,9 +33,9 @@ import samuelandazola.com.neilservices.model.entity.GameEntity;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
-   static final int WIDTH = 1921;
-   static final int HEIGHT = 1081;
-   static final int MOVESPEED = -5;
+  static final int WIDTH = 1921;
+  static final int HEIGHT = 1081;
+  static final int MOVESPEED = -5;
   private long smokeStartTimer;
   private long enemyStartTime;
   private MainThread thread;
@@ -65,7 +65,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
    * @param playerId the registers a game played to the player
    */
 //automatically called when the object is called
-   GamePanel(Context context, long playerId) {
+  GamePanel(Context context, long playerId) {
 
     super(context);
     this.playerId = playerId;
@@ -229,7 +229,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         disappear = true;
         explosion = new Explosion(BitmapFactory.decodeResource(getResources(),
             R.drawable.explosion), player.getX()+20,
-        player.getY(), 100,100,25);
+            player.getY(), 100,100,25);
       }
 
 
@@ -317,7 +317,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
       GameEntity game = new GameEntity();
       game.setScore(score[0]);
       game.setPlayerId(playerId);
-     return GameDatabase.getInstance(getContext()).getGameDao().insert(game);
+      return GameDatabase.getInstance(getContext()).getGameDao().insert(game);
     }
   }
 

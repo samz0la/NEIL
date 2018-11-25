@@ -9,9 +9,11 @@ is off as well. When you pass a certain distance (I believe around 1000) in the 
 enemy for a little while. I also currently have a red line under my draw method in my Game Panel because
 I'm not calling the super.class. The problem when I uncomment it out of my code is that the surface View 
 shows the separation of the background image as it scrolls acrossed the screen. Another bug that
-I keep getting when I am testing is a "E/GraphResponse: {HttpStatus: 400, errorCode: 100, subErrorCode: 33, errorType: GraphMethodException, errorMessage: Unsupported get request. Object with ID '1894018027360202' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api}
-" I'm currently unsure how to take care of this problem but I am looking into it. Also When you log into fb
-it says you are logged in but when you go to play the game it doesn't register you as being logged in
+I keep getting when I am testing is a "E/GraphResponse: {HttpStatus: 400, errorCode: 100, subErrorCode: 33, 
+errorType: GraphMethodException, errorMessage: Unsupported get request. Object with ID '1894018027360202' does not exist, 
+cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api}
+" I'm currently unsure how to take care of this problem but I am looking into it. I do believe it is effecting
+when you log into fb it says you are logged in but when you go to play the game it doesn't register you as being logged in
 so you won't be able to continue to the game.
 
 3. I have currently tested it on 2 emulators. A Nexus 5x with API 28 running on it, and a Pixel 2 XL running API 22. Both run
@@ -26,6 +28,7 @@ game is locked to landscape orientation.
 
 7. Stretch Goals: 
     * fix collision detection to check against RGB instead of the alpha channel
+    * fix fb login
     * fix explosion animation
     * add music
     * import it to ios 

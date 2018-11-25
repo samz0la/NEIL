@@ -13,9 +13,12 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequest.GraphJSONObjectCallback;
+import com.facebook.GraphRequestAsyncTask;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
@@ -26,6 +29,7 @@ import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.json.JSONObject;
 import samuelandazola.com.neilservices.GameActivity;
 import samuelandazola.com.neilservices.GameApplication;
 import samuelandazola.com.neilservices.R;
@@ -109,22 +113,26 @@ public class MainActivity extends Activity {
 
     //Fb login
     callbackManager = CallbackManager.Factory.create();
-
     LoginManager.getInstance().registerCallback(callbackManager,
         new FacebookCallback<LoginResult>() {
           @Override
           public void onSuccess(LoginResult loginResult) {
+            GraphRequestAsyncTask task = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphJSONObjectCallback() {
+              @Override
+              public void onCompleted(JSONObject object, GraphResponse response) {
+              }
+            }).executeAsync();
             Toast.makeText(MainActivity.this, "You Are Logged In", Toast.LENGTH_LONG).show();
           }
 
           @Override
           public void onCancel() {
-            // App code
+            Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
           }
 
           @Override
           public void onError(FacebookException exception) {
-            // App code
+            Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
           }
         });
 

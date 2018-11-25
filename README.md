@@ -5,8 +5,8 @@ I'm not the biggest gamer, I enjoy seeing visual representation of my work displ
 mindless game occasionally is a great way to take your mind off other stressful tasks that daily life presents itself.
 
 2. As of now I believe my app is in a somewhat usable state. My collision detection is a little off and my explosion animation 
-is off as well. When you pass a certain distance (I believe around 800) in the game the enemy only displays the first
-enemy. I also currently have a red line under my draw method in my Game Panel because
+is off as well. When you pass a certain distance (I believe around 1000) in the game the enemy only displays the first
+enemy for a little while. I also currently have a red line under my draw method in my Game Panel because
 I'm not calling the super.class. The problem when I uncomment it out of my code is that the surface View 
 shows the separation of the background image as it scrolls acrossed the screen. Another bug that
 I keep getting when I am testing is a "E/GraphResponse: {HttpStatus: 400, errorCode: 100, subErrorCode: 33, errorType: GraphMethodException, errorMessage: Unsupported get request. Object with ID '1894018027360202' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api}
@@ -27,7 +27,7 @@ game is locked to landscape orientation.
 7. Stretch Goals: 
     * fix collision detection to check against RGB instead of the alpha channel
     * fix explosion animation
-    * adding music
+    * add music
     * import it to ios 
     * put it up on the appstore 
     

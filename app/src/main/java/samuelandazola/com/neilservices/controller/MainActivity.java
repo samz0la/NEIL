@@ -273,6 +273,7 @@ public class MainActivity extends Activity {
     AccessToken token = AccessToken.getCurrentAccessToken();
     if (token==null){
       LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, Arrays.asList("email"));
+      
     }else{
       LoginManager.getInstance().logOut();
       Toast.makeText(this, "You Are Signed Out", Toast.LENGTH_LONG).show();

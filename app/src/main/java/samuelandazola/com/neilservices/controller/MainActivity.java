@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
@@ -117,11 +118,19 @@ public class MainActivity extends Activity {
         new FacebookCallback<LoginResult>() {
           @Override
           public void onSuccess(LoginResult loginResult) {
-            GraphRequestAsyncTask task = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphJSONObjectCallback() {
+            AccessToken accessToken = loginResult.getAccessToken();
+            GraphRequest graphRequest = GraphRequest.newMeRequest(accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
               @Override
               public void onCompleted(JSONObject object, GraphResponse response) {
+                new QueryTask().execute(object.optString("email"));
+
               }
-            }).executeAsync();
+            });
+            Bundle bundle=new Bundle();
+            bundle.putString("fields","id,email,name");
+            graphRequest.setParameters(bundle);
+            graphRequest.executeAsync();
             Toast.makeText(MainActivity.this, "You Are Logged In", Toast.LENGTH_LONG).show();
           }
 
@@ -216,6 +225,22 @@ public class MainActivity extends Activity {
   protected void onStart() {
     super.onStart();
     initDB();
+    AccessToken token = AccessToken.getCurrentAccessToken();
+    if (token != null){
+      GraphRequest graphRequest = GraphRequest.newMeRequest(token,
+          new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+              new QueryTask().execute(object.optString("email"));
+
+            }
+          });
+      Bundle bundle=new Bundle();
+      bundle.putString("fields","id,email,name");
+      graphRequest.setParameters(bundle);
+      graphRequest.executeAsync();
+      Toast.makeText(MainActivity.this, "You Are Logged In", Toast.LENGTH_LONG).show();
+    }
     GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
     if (account != null) {
       GameApplication.getInstance().setAccount(account);

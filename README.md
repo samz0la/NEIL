@@ -12,9 +12,7 @@ shows the separation of the background image as it scrolls acrossed the screen. 
 I keep getting when I am testing is a "E/GraphResponse: {HttpStatus: 400, errorCode: 100, subErrorCode: 33, 
 errorType: GraphMethodException, errorMessage: Unsupported get request. Object with ID '1894018027360202' does not exist, 
 cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api}
-" I'm currently unsure how to take care of this problem but I am looking into it. I do believe it is effecting
-when you log into fb it says you are logged in but when you go to play the game it doesn't register you as being logged in
-so you won't be able to continue to the game.
+" I'm currently unsure how to take care of this problem but I am looking into it.
 
 3. I have currently tested it on 2 emulators. A Nexus 5x with API 28 running on it, and a Pixel 2 XL running API 22. Both run
 the game fine but the Pixel has somewhat of a lag on the login screen. The login screen is locked to portrait orientation and the
@@ -28,7 +26,6 @@ game is locked to landscape orientation.
 
 7. Stretch Goals: 
     * fix collision detection to check against RGB instead of the alpha channel
-    * fix fb login
     * fix explosion animation
     * add music
     * import it to ios 

@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 import samuelandazola.com.neilservices.controller.MainActivity;
 import samuelandazola.com.neilservices.model.db.GameDatabase;
@@ -42,7 +43,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
   private Background bg;
   private Player player;
   private ArrayList<Smokepuff> smoke;
-  private ArrayList<Enemy> enemy;
+  private LinkedList<Enemy> enemy;
   private Random random = new Random();
   private boolean newGameCreated;
   private Explosion explosion;
@@ -105,7 +106,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     bg = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.background2));
     player = new Player(BitmapFactory.decodeResource(getResources(),
         R.drawable.neil_character2), 86, 120, 1);
-    enemy = new ArrayList<>();
+    enemy = new LinkedList<>();
     smoke = new ArrayList<>();
     smokeStartTimer = System.nanoTime();
     enemyStartTime = System.nanoTime();
@@ -195,7 +196,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (collision(enemy.get(i),player)){
           enemy.remove(i);
           player.setPlaying(false);
-
           break;
         }
         //removes enemy if it is way off the screen

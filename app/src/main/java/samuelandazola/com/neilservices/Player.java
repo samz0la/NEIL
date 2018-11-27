@@ -24,7 +24,7 @@ public class Player extends GameObject{
    * @param numFrames the num frames
    */
   Player(Bitmap res, int w, int h, int numFrames){
-    x = 100;
+    x = 300;
     y = GamePanel.HEIGHT/2;
     dy = 0; //acceleration on the y axis
     score = 0;
